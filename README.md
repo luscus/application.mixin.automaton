@@ -30,15 +30,9 @@ Uppon load, the mixin will scrawl and register all defined states in this struct
 
 ## Reserved states
 
-A `start` and `stop` have to be defined.
+- `start` (mandatory): triggered immediatly after the initalisation of the application.
 
-### start (mandatory)
-
-State triggered immediatly after the initalisation of the application.
-
-### stop (optional)
-
-Will lead to the stop of the application: process.exit()
+- `stop` (optional): Will lead to the stop of the application: `process.exit()`
 
 ## Added Properties and Methods
 
