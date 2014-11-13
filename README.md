@@ -5,7 +5,7 @@
 
 [Application Framework](https://github.com/luscus/application.skeleton) Mixin: transforms the application into an [Automaton (state machine)](http://en.wikipedia.org/wiki/Automata_theory).
 
-Depending on the concept you want to follow ([Automata-based](http://en.wikipedia.org/wiki/Automata-based_programming), [Event-Driven](http://en.wikipedia.org/wiki/Event-driven_finite-state_machine), [Virtual](http://en.wikipedia.org/wiki/Virtual_finite-state_machine)), the change of the state will be triggered automaticly by data, events,... No method is provided to change the state at will.
+Depending on the concept you want to follow ([Automata-based](http://en.wikipedia.org/wiki/Automata-based_programming), [Event-Driven](http://en.wikipedia.org/wiki/Event-driven_finite-state_machine), [Virtual](http://en.wikipedia.org/wiki/Virtual_finite-state_machine)), the change of the state will be triggered automaticly by data, events,...
 
 
 ## Directory Structure
