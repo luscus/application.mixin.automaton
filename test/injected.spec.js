@@ -16,6 +16,12 @@ var automaton = require('../data/automaton'),
 
 injected(app);
 
+var oldExit = process.exit;
+process.exit = function exit () {
+  console.log('process shuting down');
+  process.exit = oldExit;
+};
+
 describe('Injected Object:', function () {
 
   it('has property states', function () {
@@ -88,33 +94,33 @@ describe('State Change to "state1" with removed "start" state:', function () {
 });
 
 
-describe('State Change to "end" using "start" as state init:', function () {
+describe('State Change to "state2" using "start" as state init:', function () {
 
   it('application has no "state1Func" method', function () {
     app.should.not.have.property('state1Func');
   });
 
-  it('application has a "state" method and it returns "end"', function () {
+  it('application has a "state" method and it returns "state2"', function () {
     app.should.have.property('state');
-    app.state().should.equal(automaton.states.end.name);
+    app.state().should.equal(automaton.states.state2.name);
   });
 
   it('application has a "startOtherFunc" method', function () {
     app.should.have.property('startOtherFunc');
     app.startOtherFunc.should.be.a('function');
-    app.startOtherFunc().should.equal('end.startOtherFunc');
+    app.startOtherFunc().should.equal('state2.startOtherFunc');
   });
 
   it('application has a "test" method', function () {
     app.should.have.property('test');
     app.test.should.be.a('function');
-    app.test().should.equal('end.test');
+    app.test().should.equal('state2.test');
   });
 
   it('application has a "bla" method', function () {
     app.should.have.property('bla');
     app.bla.should.be.a('function');
-    app.bla().should.equal('end.bla');
+    app.bla().should.equal('state2.bla');
   });
 
 });

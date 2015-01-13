@@ -19,7 +19,7 @@ states.state1 = {
   test: function test () {
     var result = this.state()+'.test';
 
-    automaton.changeState('end', automaton.states.start);
+    automaton.changeState('state2', automaton.states.start);
     return result;
   },
   state1Func: function state1Func () {
@@ -27,12 +27,15 @@ states.state1 = {
   }
 };
 
-states.end = {
+states.state2 = {
   test: function test () {
     return this.state()+'.test';
   },
   bla: function bla () {
-    return this.state()+'.bla';
+    var result = this.state()+'.bla';
+
+    automaton.changeState('end');
+    return result;
   }
 };
 
