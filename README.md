@@ -5,10 +5,15 @@
 
 [Application Framework](https://github.com/luscus/application.skeleton) Mixin: transforms the application into an [Automaton (state machine)](http://en.wikipedia.org/wiki/Automata_theory).
 
-Depending on the concept you want to follow ([Automata-based](http://en.wikipedia.org/wiki/Automata-based_programming), [Event-Driven](http://en.wikipedia.org/wiki/Event-driven_finite-state_machine), [Virtual](http://en.wikipedia.org/wiki/Virtual_finite-state_machine)), the change of the state will be triggered automaticly by data, events,...
+Depending on the concept you want to follow ([Automata-based](http://en.wikipedia.org/wiki/Automata-based_programming), [Event-Driven](http://en.wikipedia.org/wiki/Event-driven_finite-state_machine), [Virtual](http://en.wikipedia.org/wiki/Virtual_finite-state_machine)),
+the change of the state will be triggered automaticly by data, events, ...
+
+State changes can't be triggered by the user of the application, it only follows the rules created by the application developer.
+In order to enforce this, no "changeState" method will be added to the application Object (see the usage section).
 
 
-## Directory Structure
+##
+### Directory Structure
 
 At the package directory root a folder "states" has to exist.
 
@@ -23,37 +28,84 @@ Each state itself must be reflected into a subfolder and JavaScript file:
                |_ <state-B>
                |     |_ <state-B>.js
               ...
-               |_ stop
-                     |_ stop.js
+               |_ end
+                     |_ end.js
 
 Uppon load, the mixin will scrawl and register all defined states in this structure.
 
-## Reserved states
+### Reserved states
 
-- `start` (mandatory): triggered immediatly after the initalisation of the application.
+- `start` (mandatory state): triggered immediatly after the initalisation of the application.
 
-- `stop` (optional): Will lead to the stop of the application: `process.exit()`
+- `end` (optional state): by default switching to `end` will call: `process.exit()`
 
-## Added Properties and Methods
+
+## Additions to the application Object
 
 ### Method "state"
 
 Returns the name of the current state.
 
+    app.state(); // return state name
+
 
 ## Usage
+
+### Setting dependency
 
 Your application project has to build upon the [application.skeleton](https://github.com/luscus/application.skeleton) and you only have to set the new dependency:
 
     npm install application.mixin.automaton --save
 
-The `application.skeleton` will do all the work adding the Mixins as this one.
+The `application.skeleton` will do all the work adding the Mixins to your application object.
 
-Simply use the new functionality:
+### Writing states
 
-    {
-      state: <function>
-    }
+States are mixin templates that will be applied automatically to you application object on state changes.
+Define them as you would any template:
+
+*<project_root>states/myState/myState.js*:
+
+    module.exports = {
+      doSomething: function doSomething (arg1, arg2) {
+        // ... some code ...
+
+        // this references the application object
+        this.someProperty = true;
+
+        if (condition) {
+          // trigger a state change
+          automaton.changeState('otherState');
+        }
+      }
+    };
+
+**Beware**:
+
+- You HAVE to use named function declarations.
+- The library enforces that the runtime context points to the application object
+- The library will inject at runtime an `automaton` Object in every method you define. Using it you can trigger a state change at any moment you feel fit.
+
+## automaton Object Properties
+
+### states
+
+A Map holding all state templates referenced by the state name.
+
+### state
+
+The actual state object extended with a `name` property holding the state name.
+
+### changeState
+
+Method triggering a state change. It will remove the methods of the actual state template,
+mixin any provided initial template before applying the new state template to the application object.
+
+Parameters:
+
+- `stateName`: the name of the target state
+- `initTemplate` (optional): a template that will be used to set base behaviours to the application object
+
 
 --------------
 Copyright (c) 2014 Luscus (luscus.redbeard@gmail.com)
