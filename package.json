@@ -9,7 +9,7 @@
   "description": "Application Framework Mixin: transforms the application into an Automaton (state machine)",
   "keywords": [
     "application.mixin.automaton",
-    "state machine"
+    "state machine",
     "automation",
     "framework",
     "automata",
@@ -18,10 +18,12 @@
     "fsm"
   ],
   "dependencies": {
-    "prototype-less": "0.0.2"
+    "function.signature.extender": "0.0.2",
+    "package.root": "0.2.0"
   },
   "devDependencies": {
     "grunt": "0.4.5",
+    "grunt-license-report": "0.0.2",
     "grunt-contrib-jshint": "0.10.0",
     "grunt-mocha-test": "0.10.2",
     "load-grunt-tasks": "0.6.0",
